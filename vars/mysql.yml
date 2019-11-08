@@ -1,0 +1,7 @@
+mysql_sock: /tmp/mysql.sock
+mysql_port: 3306
+mysql_root_passwd: "gr123465!"
+master_ip: 192.168.31.135
+slave_ip: 192.168.31.136
+repl_user: replication
+repl_passwd: "uY6Cu2ei"
