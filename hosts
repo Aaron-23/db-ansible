@@ -1,3 +1,4 @@
 [mysql]
-master ansible_host=192.168.31.135  ansible_port=22 ip=192.168.31.135 port=22
-slave  ansible_host=192.168.31.136  ansible_port=22 ip=192.168.31.136 port=22
+master ansible_user='root' ansible_pass='gr123465!'  ansible_host='192.168.2.151' ansible_port='22'
+slave ansible_user='root' ansible_pass='gr123465!'  ansible_host='192.168.2.139' ansible_port='22'
+

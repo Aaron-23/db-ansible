@@ -1,0 +1,5 @@
+---
+- hosts: all
+  roles:
+    - { role: docker/install, tags: install }
+    - { role: mysql, tags: tasks }
