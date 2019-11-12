@@ -2,61 +2,23 @@
 - name: Downloads mysql image
   shell: docker pull 16601306786/rbd-db:v5.7.26
 
-- name: init_mysql
-  shell: docker run --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -i 16601306786/rbd-db:v5.7.26 && sleep 30
-  tags: 
-    - init_mysql
-    
+#- name: start_mysql_service
+#  shell: docker run --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -i 16601306786/rbd-db:v5.7.26 && sleep 30
  
-- name: get_mysql_passwd
-  shell: cat log/mysqld.log |grep localhost|awk -F ':' '{print $4}'|cut -c  2-
-  register: mysql_init_passwd
-  args:  
-    chdir: "{{ mysql_install_path }}/{{ mysql_link }}"
-  tags: 
-    - get_mysql_passwd
- 
- 
- 
-- name: dispaly_passwd
-  debug: 
-    msg: "{{ mysql_init_passwd.stdout }}"
-  tags:
-    - dispaly_passwd
- 
- 
- 
-- name: copy_mysql.server
-  copy:
-    src: "{{ mysql_install_path }}/{{ mysql_link }}/support-files/mysql.server"
-    dest: /etc/init.d/mysql-{{ mysql_port }}.server
-    mode: 0755
-  tags:
-     - copy_mysql.server
- 
- 
- 
-- name: add_mysql_systemd
+- name: DB | Copy DB conf
   template:
-    src: mysql.service.j2
-    dest: /etc/systemd/system/mysql-{{ mysql_port }}.service
-  tags:
-    - add_mysql_systemd
- 
- 
- 
+    src: mysqld.cnf.j2
+    dest: "/opt/rainbond/mysql/mysqld.cnf"
+
+- name: DB | Copy DB service
+  template:
+    src: rbd-db.service.j2
+    dest: "/etc/systemd/system/rbd-db.service"
+
 - name: start_mysql_service
-  systemd:
-    name: mysql-{{ mysql_port }}
-    daemon_reload: yes
-    enabled: yes
-    state: restarted
-  tags:
-    - start_mysql_service
+  shell: systemctl start rbd-db
  
- 
- 
-- name: alter_passwd
+- name: create user and passwd
   shell: ./bin/mysqladmin -u root -p'{{mysql_init_passwd.stdout}}' password '{{ mysql_root_passwd }}'
   args:
     chdir: "{{ mysql_install_path }}/{{ mysql_link }}"

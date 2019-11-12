@@ -1,5 +1,5 @@
 ---
-- name: Set Docker
+- name: INSTALL Mysql
   import_tasks: install_mysql.yml
 
 - name: DB | Copy DB conf
