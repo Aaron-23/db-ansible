@@ -19,7 +19,8 @@ DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.
 grant replication slave on *.* to '$SYNC_USER'@'%' identified by '$SYNC_USER_PASS';
 FLUSH PRIVILEGES;
 EOF
-mysql -uroot  < master.sql
+
+mysql -uroot  < /data/master.sql
 
 SLAVE_LOG_FILE=`mysql  -e "show master status;" |grep mysql |awk '{print $1}'`
 SLAVE_LOG_POS=`mysql  -e "show master status;" |grep mysql |awk '{print $2}'`
@@ -39,7 +40,7 @@ change master to master_host='$MASTER_HOST',master_user='$SYNC_USER',master_pass
 start slave;
 FLUSH PRIVILEGES;
 EOF
-mysql -uroot  < slave.sql
+mysql -uroot  < /data/slave.sql
 mysql  -e 'show slave status\G'|grep Slave
 END
 #scp slave.sh $SLAVE_HOST:/root/

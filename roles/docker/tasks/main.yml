@@ -1,15 +1,15 @@
 ---
-- name: disable selinux
+- name: Disable selinux
   shell: "setenforce 0"
   failed_when: false
 
-- name: disable selinux forover
+- name: Disable selinux forover
   lineinfile:
     dest: /etc/selinux/config
     regexp: "^SELINUX="
     line: "SELINUX=disabled"
     
-- name: remove centos firewall pkg
+- name: Remove centos firewall pkg
   yum: 
     name: 
       - firewalld
@@ -42,7 +42,7 @@
   stat: path=/etc/docker/daemon.json
   register: docker_daemon_check
 
-- name: start docker.service
+- name: Start docker.service
   service:
     name: docker
     enabled: yes
@@ -60,7 +60,7 @@
     dest: /etc/docker/daemon.json
   when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian" and docker_daemon_check.stat.isreg is not defined
 
-- name: reload docker
+- name: Reload docker
   shell: systemctl daemon-reload && systemctl restart docker
 
 - name: Ensure docker service is started and enabled

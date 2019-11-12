@@ -5,6 +5,6 @@
     dest: "/opt/rainbond/data/mysql/add_slave.sh"
     mode: 755
 
-- name: add slave
-  shell: docker exec -t rbd-db sh -c 'bash -x /data/add_slave.sh'
+- name: Add slave
+  shell: docker exec -t rbd-db sh -c 'sh /data/add_slave.sh'
   when: inventory_hostname in groups['new-master']
