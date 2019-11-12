@@ -17,7 +17,7 @@
       - firewalld-filesystem
       - dnsmasq
       - nscd
-    state: absent- name: add Online EPEL repo
+    state: absent
 
 - name: add Online EPEL repo
   yum: name=epel-release state=present
