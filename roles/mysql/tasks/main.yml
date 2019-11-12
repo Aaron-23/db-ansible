@@ -1,4 +1,7 @@
 ---
+- name: Set Docker
+  import_tasks: install_mysql.yml
+
 - name: DB | Copy DB conf
   template:
     src: mysqld.cnf.j2

@@ -1,0 +1,50 @@
+---
+- name: Check if docker is installed
+  stat: path="/usr/bin/docker"
+  register: docker_check
+
+- name: The next task may take some time to execute
+  debug:
+    msg: "The next task may take some time to execute: install docker"
+  when: docker_check.stat.isreg is undefined
+
+- name: Docker | Install docker online
+  shell: "export VERSION=18.06 && curl -fsSL http://rainbond-pkg.oss-cn-shanghai.aliyuncs.com/releases/docker/install-docker.sh | bash -s docker "
+  register: docker_task_result
+  until: docker_task_result is succeeded
+  retries: 4
+  when: docker_check.stat.isreg is undefined
+
+- name: Docker | Start docker
+  service:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Check if daemon is existing
+  stat: path=/etc/docker/daemon.json
+  register: docker_daemon_check
+
+- name: Write docker daemon For CentOS
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  when: ansible_distribution == "CentOS" and docker_daemon_check.stat.isreg is not defined
+
+- name: Write docker daemon For Debian/Ubuntu
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian" and docker_daemon_check.stat.isreg is not defined
+
+- name: reload docker
+  shell: systemctl daemon-reload && systemctl restart docker
+  when: ansible_distribution == "CentOS" and offline_repo.stat.isreg is not defined
+
+- name: Ensure docker service is started and enabled
+  service:
+    name: docker
+    enabled: yes
+    state: started
+  ignore_errors: true
+

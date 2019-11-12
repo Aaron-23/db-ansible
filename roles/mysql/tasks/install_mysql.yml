@@ -1,70 +1,9 @@
----
-- name:  unarchive_mysql_tar
-  unarchive:
-    src:  "{{ mysql_version }}.tar.gz"
-    dest: "{{ mysql_install_path }}"
-    owner: mysql
-    group: mysql
-  tags:
-    - unarchive_mysql_tar
- 
- 
-- name: chown_mysql
-  file: 
-    dest: "{{ mysql_install_path }}/{{mysql_version}}"
-    owner: mysql
-    group: mysql
-    recurse: yes
-  tags:
-    - chown_mysql
- 
- 
-- name: link_mysql
-  file:
-    src: "{{ mysql_install_path }}/{{mysql_version}}"
-    dest: "{{ mysql_install_path }}/{{ mysql_link }}"
-    owner: mysql
-    group: mysql
-    state: link
-  tags:
-    - link_mysql
- 
- 
- 
-- name: mkdir_log
-  file:
-    path: "{{ mysql_install_path }}/{{ mysql_link }}/log"
-    owner: mysql
-    group: mysql
-    state: directory
-  tags:
-    - mkdir_log
- 
- 
- 
-- name: touch_mysql.log
-  file:
-    path: "{{ mysql_install_path }}/{{ mysql_link }}/log/mysqld.log"
-    owner: mysql
-    group: mysql
-    state: touch
-  tags:
-    - touch_mysql.log
- 
- 
-- name: copy_my.cnf
-  template:
-    src: my.cnf.j2
-    dest: /etc/my.cnf
-  tags:
-    - copy_my.cnf
- 
- 
- 
+--- 
+- name: Downloads mysql image
+  shell: docker pull 16601306786/rbd-db:v5.7.26
+
 - name: init_mysql
-  shell: ./bin/mysqld --initialize  --user=mysql
-  args:
-    chdir: "{{ mysql_install_path }}/{{ mysql_link }}"
+  shell: docker run --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -i 16601306786/rbd-db:v5.7.26 && sleep 30
   tags: 
     - init_mysql
     
