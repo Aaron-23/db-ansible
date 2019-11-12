@@ -31,8 +31,5 @@
     state: absent
 
 - name: start rbd-db
-  service: name=rbd-db state=started 
-
-#- name: start_mysql_service
-#  shell: docker run -d --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -v /opt/rainbond/etc/mysql/mysqld.cnf:/etc/percona-sercer.conf.d/   -i 16601306786/rbd-db:v5.7.26
+  service: name=rbd-db state=started
 

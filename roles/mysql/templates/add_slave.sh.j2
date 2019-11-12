@@ -1,0 +1,46 @@
+#!/bin/bash
+#====================================================
+# Author: Mr.Zhang
+# Create Date: 2019-11-13
+# Description: auto config MySQL master&slave
+#====================================================
+MYSQL_PASSWORD=""
+MASTER_HOST="192.168.31.135"
+SLAVE_HOST="192.168.31.136"
+SYNC_USER="slave"
+SYNC_USER_PASS="Gr123465!"
+
+cat > master.sql <<- EOF
+#UPDATE mysql.user SET Password=PASSWORD('$MYSQL_PASSWORD') WHERE User='root';
+#DELETE FROM mysql.user WHERE User='';
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\\_%';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+grant replication slave on *.* to '$SYNC_USER'@'%' identified by '$SYNC_USER_PASS';
+FLUSH PRIVILEGES;
+EOF
+mysql -uroot  < master.sql
+
+SLAVE_LOG_FILE=`mysql  -e "show master status;" |grep mysql |awk '{print $1}'`
+SLAVE_LOG_POS=`mysql  -e "show master status;" |grep mysql |awk '{print $2}'`
+cat > slave.sh <<- END
+#!/bin/bash
+MYSQL_PASSWORD=""
+MASTER_HOST="192.168.31.135"
+SLAVE_HOST="192.168.31.136"
+SYNC_USER="slave"
+SYNC_USER_PASS="Gr123465!"
+
+cat > slave.sql <<- EOF
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\\\_%';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+change master to master_host='$MASTER_HOST',master_user='$SYNC_USER',master_password='$SYNC_USER_PASS',master_auto_position=1;
+start slave;
+FLUSH PRIVILEGES;
+EOF
+mysql -uroot  < slave.sql
+mysql  -e 'show slave status\G'|grep Slave
+END
+scp slave.sh $SLAVE_HOST:/root/
+ssh $SLAVE_HOST  bash -x /root/slave.sh
