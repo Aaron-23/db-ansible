@@ -1,4 +1,24 @@
 ---
+- name: disable selinux
+  shell: "setenforce 0"
+  failed_when: false
+
+- name: disable selinux forover
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: "^SELINUX="
+    line: "SELINUX=disabled"
+    
+- name: remove centos firewall pkg
+  yum: 
+    name: 
+      - firewalld
+      - python-firewall
+      - firewalld-filesystem
+      - dnsmasq
+      - nscd
+    state: absent
+  
 - name: Check if docker is installed
   stat: path="/usr/bin/docker"
   register: docker_check
