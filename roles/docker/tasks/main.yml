@@ -17,8 +17,11 @@
       - firewalld-filesystem
       - dnsmasq
       - nscd
-    state: absent
-  
+    state: absent- name: add Online EPEL repo
+
+- name: add Online EPEL repo
+  yum: name=epel-release state=present
+    
 - name: Check if docker is installed
   stat: path="/usr/bin/docker"
   register: docker_check
@@ -36,13 +39,7 @@
   when: docker_check.stat.isreg is undefined
 
 - name:  Install docker-py
-  shell: yum install -y -q epel-release && yum -y install python2-pip-8.1.2-10.el7.noarch && pip install docker-py
-
-- name: Docker | Start docker
-  service:
-    name: docker
-    enabled: yes
-    state: started
+  shell:  yum -y install python2-pip-8.1.2-10.el7.noarch && pip install docker-py
 
 - name: Check if daemon is existing
   stat: path=/etc/docker/daemon.json
@@ -62,7 +59,6 @@
 
 - name: reload docker
   shell: systemctl daemon-reload && systemctl restart docker
-  when: ansible_distribution == "CentOS" and offline_repo.stat.isreg is not defined
 
 - name: Ensure docker service is started and enabled
   service:
