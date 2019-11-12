@@ -3,7 +3,7 @@
   shell: "setenforce 0"
   failed_when: false
 
-- name: Disable selinux forover
+- name: Disable selinux forever
   lineinfile:
     dest: /etc/selinux/config
     regexp: "^SELINUX="
