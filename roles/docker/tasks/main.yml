@@ -34,16 +34,10 @@
   until: docker_task_result is succeeded
   retries: 4
   when: docker_check.stat.isreg is undefined
-  
-  - name: add Online EPEL repo
-  yum: 
-   name: 
-      - epel-release
-   state: present
 
 - name:  Install docker-py
-  shell:  yum -y install python2-pip-8.1.2-10.el7.noarch && pip install docker-py
-
+  shell: yum install -y -q epel-release && yum -y install python2-pip-8.1.2-10.el7.noarch && pip install docker-py
+  
 - name: Check if daemon is existing
   stat: path=/etc/docker/daemon.json
   register: docker_daemon_check
