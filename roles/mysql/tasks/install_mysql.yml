@@ -1,6 +1,10 @@
 --- 
+- name: The next task may take some time to execute
+  debug:
+    msg: "The next task may take some time to execute: download rbd-db image"
+
 - name: Downloads mysql image
-  shell: docker pull 16601306786/rbd-db:v5.7.26  && mkdir -p /opt/rainbond/etc
+  shell: docker pull 16601306786/rbd-db:v5.7.26  && mkdir -p /opt/rainbond/etc/mysql
  
 - name: DB | Copy DB conf
   template:

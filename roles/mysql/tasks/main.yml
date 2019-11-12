@@ -2,15 +2,5 @@
 - name: INSTALL Mysql
   import_tasks: install_mysql.yml
 
-- name: DB | Copy DB conf
-  template:
-    src: mysqld.cnf.j2
-    dest: "/opt/rainbond/"
-
-- name: DB | Copy DB service
-  template:
-    src: rbd-db.service.j2
-    dest: "/opt/rainbond/"
-
 - name: ADD slave
   import_tasks: add-slave.yml
