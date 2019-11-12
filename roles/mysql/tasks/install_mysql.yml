@@ -11,6 +11,7 @@
   template:
     src: rbd-db.service.j2
     dest: "/etc/systemd/system/rbd-db.service"
+    mode: 755
 
 - name: Check whether MySQL data directory exists
   stat: path="/opt/rainbond/data/mysql"
@@ -21,7 +22,8 @@
   when: mysql_data_check.stat.isreg is defined
 
 - name: Delete container in exit state
-  shell: docker rm $(sudo docker ps -a -q)
+  shell: docker rm rbd-db -f
+  ignore_errors: yes
 
 - name: start_mysql_service
   shell: systemctl start rbd-db
