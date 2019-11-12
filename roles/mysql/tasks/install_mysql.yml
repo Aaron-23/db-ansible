@@ -1,11 +1,11 @@
 --- 
 - name: Downloads mysql image
-  shell: docker pull 16601306786/rbd-db:v5.7.26 && mkdir -p /opt/rainbond/mysql
+  shell: docker pull 16601306786/rbd-db:v5.7.26  && mkdir -p /opt/rainbond/etc
  
 - name: DB | Copy DB conf
   template:
     src: mysqld.cnf.j2
-    dest: "/opt/rainbond/mysql/mysqld.cnf"
+    dest: "/opt/rainbond/etc/mysql/mysqld.cnf"
 
 - name: DB | Copy DB service
   template:
@@ -21,9 +21,14 @@
   shell: rm -rf  /opt/rainbond/data/mysql.bak && mv /opt/rainbond/data/mysql  /opt/rainbond/data/mysql.bak
   when: mysql_data_check.stat.isreg is defined
 
-- name: Delete container in exit state
-  shell: docker rm rbd-db -f
-  ignore_errors: yes
+- name: remove container
+  docker_container:
+    name: rbd-db
+    state: absent
 
-- name: start_mysql_service
-  shell: systemctl start rbd-db
+- name: start rbd-db
+  service: name=rbd-db state=started 
+
+#- name: start_mysql_service
+#  shell: docker run -d --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -v /opt/rainbond/etc/mysql/mysqld.cnf:/etc/percona-sercer.conf.d/   -i 16601306786/rbd-db:v5.7.26
+
