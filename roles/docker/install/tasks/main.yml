@@ -1,4 +1,19 @@
 ---
+- name: The next task may take some time to execute
+  debug:
+    msg: "The next task may take some time to execute: install docker"
+
+- name: Docker | Install docker online
+  shell: "export VERSION=18.06 && curl -fsSL http://rainbond-pkg.oss-cn-shanghai.aliyuncs.com/releases/docker/install-docker.sh | bash -s docker "
+  register: docker_task_result
+  until: docker_task_result is succeeded
+  retries: 4
+
+- name: Docker | Start docker
+  service:
+    name: docker
+    enabled: yes
+    state: started
 - name: Set Docker
   import_tasks: prepare.yml
 
