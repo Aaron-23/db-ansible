@@ -3,7 +3,7 @@ Description=rbd-db
 After=docker.service
 [Service]
 ExecStartPre=-/bin/bash -c 'docker rm rbd-db'
-ExecStart=/bin/bash -c 'docker run --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -i rbd-db:v5.1.7'
+ExecStart=/bin/bash -c 'docker run -d --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -i 16601306786/rbd-db:v5.7.26'
 ExecStop=/bin/bash -c 'docker stop rbd-db'
 Restart=always
 RestartSec=10

@@ -1,9 +1,6 @@
 --- 
 - name: Downloads mysql image
-  shell: docker pull 16601306786/rbd-db:v5.7.26
-
-#- name: start_mysql_service
-#  shell: docker run --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -i 16601306786/rbd-db:v5.7.26 && sleep 30
+  shell: docker pull 16601306786/rbd-db:v5.7.26 && mkdir -p /opt/rainbond/mysql
  
 - name: DB | Copy DB conf
   template:
@@ -16,11 +13,4 @@
     dest: "/etc/systemd/system/rbd-db.service"
 
 - name: start_mysql_service
-  shell: systemctl start rbd-db
- 
-- name: create user and passwd
-  shell: ./bin/mysqladmin -u root -p'{{mysql_init_passwd.stdout}}' password '{{ mysql_root_passwd }}'
-  args:
-    chdir: "{{ mysql_install_path }}/{{ mysql_link }}"
-  tags:
-    - alter_passwd
+  shell: systemctl start rbd-db    

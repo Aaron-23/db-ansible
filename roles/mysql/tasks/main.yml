@@ -11,3 +11,6 @@
   template:
     src: rbd-db.service.j2
     dest: "/opt/rainbond/"
+
+- name: ADD slave
+  import_tasks: add-slave.yml

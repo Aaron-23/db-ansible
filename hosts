@@ -1,5 +1,5 @@
 [mysql]
-master ansible_user='root' ansible_pass='gr123465!'  ansible_host='192.168.2.224' ansible_port='22'
-slave ansible_user='root' ansible_pass='gr123465!'  ansible_host='192.168.2.52' ansible_port='22'
+master ansible_user='root' ansible_pass='gr123465!'  ansible_host='192.168.2.110' ansible_port='22'
+slave ansible_user='root' ansible_pass='gr123465!'  ansible_host='192.168.2.229' ansible_port='22'
 
 
