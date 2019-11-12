@@ -42,6 +42,12 @@
   stat: path=/etc/docker/daemon.json
   register: docker_daemon_check
 
+- name: start docker.service
+  service:
+    name: docker
+    enabled: yes
+    state: started
+    
 - name: Write docker daemon For CentOS
   template:
     src: daemon.json.j2
