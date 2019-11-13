@@ -1,7 +1,7 @@
 ! Configuration File for keepalived
 
 global_defs {
-   router_id MYSQL
+   router_id MYSQL_MASTER
    }
 vrrp_script check_mysql {
    script "/etc/keepalived/check_mysql.sh"
@@ -10,16 +10,16 @@ vrrp_script check_mysql {
 vrrp_instance VI_1 {
        state BACKUP
        interface eth0
-       virtual_router_id 51
+       virtual_router_id 60
        priority 70
        nopreempt
        advert_int 1
        authentication {
            auth_type PASS
-           auth_pass 2222
+           auth_pass 6666
        }
 virtual_ipaddress {
-           192.168.2.99
+           192.168.2.123
        }
 track_script {
        check_mysql
