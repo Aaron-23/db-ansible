@@ -10,10 +10,6 @@ SYNC_USER_PASS="Gr123465!"
 
 cat >/data/master.sql <<- EOF
 
-DELETE FROM mysql.user WHERE User='';
-DROP DATABASE IF EXISTS test;
-DELETE FROM mysql.db WHERE Db='test' OR Db='test\\\_%';
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 grant replication slave on *.* to '$SYNC_USER'@'%' identified by '$SYNC_USER_PASS';
 FLUSH PRIVILEGES;
 EOF
