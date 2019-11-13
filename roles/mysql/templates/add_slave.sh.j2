@@ -5,7 +5,7 @@
 # Description: auto config MySQL master&slave
 #====================================================
 
-cat > slave.sh <<- END
+cat > /data/slave.sh <<- END
 #!/bin/bash
 MYSQL_PASSWORD=""
 MASTER_HOST="192.168.31.135"
@@ -13,7 +13,7 @@ SLAVE_HOST="192.168.31.136"
 SYNC_USER="slave"
 SYNC_USER_PASS="Gr123465!"
 
-cat > slave.sql <<- EOF
+cat > /data/slave.sql <<- EOF
 DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\\\\_%';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
