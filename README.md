@@ -1,8 +1,6 @@
-## db-ansible
+# db-ansible
 
-- Ansible install Rbd-DB dual primary cluster + keepalived  
-
-For centos7.4 Ubuntu 16.04
+### Ansible install Rbd-DB dual primary cluster + keepalived; For centos7.4 Ubuntu 16.04
 
 ```
 git clone https://github.com/Aaron-23/db-ansible.git
