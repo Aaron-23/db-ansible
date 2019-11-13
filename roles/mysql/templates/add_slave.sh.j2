@@ -5,11 +5,9 @@
 # Description: auto config MySQL master&slave
 #====================================================
 
-cat > /data/slave.sh <<- END
-#!/bin/bash
 MYSQL_PASSWORD=""
-MASTER_HOST="192.168.31.135"
-SLAVE_HOST="192.168.31.136"
+MASTER_HOST="192.168.2.100"
+SLAVE_HOST="192.168.2.229"
 SYNC_USER="slave"
 SYNC_USER_PASS="Gr123465!"
 
@@ -23,5 +21,5 @@ FLUSH PRIVILEGES;
 EOF
 mysql -uroot  < /data/slave.sql
 mysql  -e 'show slave status\G'|grep Slave
-END
+
 
