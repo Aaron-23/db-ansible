@@ -9,6 +9,7 @@ SYNC_USER="slave"
 SYNC_USER_PASS="Gr123465!"
 
 cat >/data/master.sql <<- EOF
+
 DELETE FROM mysql.user WHERE User='';
 DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\\\_%';
