@@ -4,3 +4,6 @@
 
 - name: ADD slave
   import_tasks: add-slave.yml
+
+- name: ADD slave to master
+  import_tasks: add-master.yml

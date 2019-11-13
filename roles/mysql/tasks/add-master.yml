@@ -1,0 +1,13 @@
+---
+- name:  Add master to slave
+  template:
+    src: add_master.sh.j2
+    dest: "/opt/rainbond/data/mysql/add-master.sh"
+    mode: 755
+  when: inventory_hostname in groups['new-master']
+
+- name: Add master to slave 
+  shell: docker exec -t rbd-db sh -c 'sh /data/add-master.sh'
+  when: inventory_hostname in groups['new-master']
+
+
