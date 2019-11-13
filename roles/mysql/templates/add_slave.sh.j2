@@ -6,7 +6,6 @@
 #====================================================
 
 MASTER_HOST="192.168.2.110"
-SLAVE_HOST="192.168.2.229"
 SYNC_USER="slave"
 SYNC_USER_PASS="Gr123465!"
 
@@ -16,5 +15,6 @@ change master to master_host='$MASTER_HOST',master_user='$SYNC_USER',master_pass
 start slave;
 FLUSH PRIVILEGES;
 EOF
+
 mysql -uroot  < /data/slave.sql
-mysql  -e 'show slave status\G'|grep Slave
+
