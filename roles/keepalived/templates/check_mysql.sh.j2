@@ -1,5 +1,5 @@
 #!/bin/bash
-ss -lntp|grep :3306 &>/dev/null
+docker exec  rbd-db bash -c "mysql -e  'show status'" &>/dev/null
 if [ $? -ne 0 ] ;then
 cat /var/run/keepalived.pid | xargs kill
 fi
