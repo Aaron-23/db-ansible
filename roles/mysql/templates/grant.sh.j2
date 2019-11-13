@@ -10,7 +10,7 @@ SLAVE_HOST="192.168.31.136"
 SYNC_USER="slave"
 SYNC_USER_PASS="Gr123465!"
 
-cat > master.sql <<- EOF
+cat > /data/master.sql <<- EOF
 DELETE FROM mysql.user WHERE User='';
 DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\\\_%';
