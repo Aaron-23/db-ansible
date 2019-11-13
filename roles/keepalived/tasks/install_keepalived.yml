@@ -1,7 +1,7 @@
 --- 
 - name: The next task may take some time to execute
   debug:
-    msg: "The next task may take some time to execute: INSTALL Keepalived"
+    msg: "The next task may take some time to execute: Install Keepalived"
 
 - name: Keepalived |Install Keepalived
   yum: 
