@@ -5,6 +5,7 @@
 # Description: auto config MySQL master&slave
 #====================================================
 
+
 cat > /data/slave.sql <<- EOF
 
 change master to master_host='{{ MASTER_HOST }}',master_user='{{ SYNC_USER }}',master_password='{{ SYNC_USER_PASS }}',master_auto_position=1;
@@ -13,3 +14,4 @@ FLUSH PRIVILEGES;
 EOF
 
 mysql -uroot  < /data/slave.sql
+

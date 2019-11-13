@@ -1,8 +1,8 @@
 ---
 
-- name: View master-slave replication status
+- name: View master-master replication status
   shell: docker exec -t rbd-db sh -c "mysql -e 'show slave status\G;'| grep -E 'Slave_IO_Running|Slave_SQL_Running'|awk '{print $2}'|grep  Yes"
   register: result
 
-- name: Show debug info
+- name: View dual primary cluster status
   debug: var=result.stdout_lines verbosity=0
