@@ -1,10 +1,24 @@
 ---
-- name:  Copy DB conf
+- name:  Main authorization
+  template:
+    src: grant.sh.j2
+    dest: "/opt/rainbond/data/mysql/grant.sh"
+    mode: 755
+  when: inventory_hostname in groups['new-master']
+
+- name: Main authorization
+  shell: docker exec -t rbd-db sh -c 'sh /data/grant.sh'
+  when: inventory_hostname in groups['new-master']
+
+- name:  Add slave
   template:
     src: add_slave.sh.j2
-    dest: "/opt/rainbond/data/mysql/add_slave.sh"
+    dest: "/opt/rainbond/data/mysql/add-slave.sh"
     mode: 755
+  when: inventory_hostname in groups['new-slave']
 
 - name: Add slave
-  shell: docker exec -t rbd-db sh -c 'sh /data/add_slave.sh'
-  when: inventory_hostname in groups['new-master']
+  shell: docker exec -t rbd-db sh -c 'sh /data/add-slave.sh'
+  when: inventory_hostname in groups['new-slave']
+
+

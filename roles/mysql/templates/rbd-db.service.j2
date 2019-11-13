@@ -8,6 +8,7 @@ ExecStart=/bin/bash -c 'docker run -d --name rbd-db --network host -e MYSQL_ALLO
 #ExecStop=/bin/bash -c 'docker stop rbd-db'
 #Restart=always
 #RestartSec=10
+
 [Install]
 WantedBy=multi-user.target
 

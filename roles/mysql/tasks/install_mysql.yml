@@ -8,8 +8,15 @@
  
 - name: DB | Copy DB conf
   template:
-    src: mysqld.cnf.j2
+    src: master.cnf.j2
     dest: "/opt/rainbond/etc/mysql/mysqld.cnf"
+    when: inventory_hostname in groups['new-master']
+
+- name: DB | Copy DB conf
+  template:
+    src: slave.cnf.j2
+    dest: "/opt/rainbond/etc/mysql/mysqld.cnf"
+    when: inventory_hostname in groups['new-slave']
 
 - name: DB | Copy DB service
   template:
@@ -31,5 +38,8 @@
     state: absent
 
 - name: Start rbd-db
-  service: name=rbd-db state=started
+  service:
+    name: rbd-db
+    enabled: yes
+    state: started
 
