@@ -1,12 +1,4 @@
 ---
-- name: INSTALL Keepalived
+- name: Install Keepalived
   import_tasks: install_keepalived.yml
 
-#- name: ADD slave
-#  import_tasks: add-slave.yml
-#
-#- name: ADD slave to master
-#  import_tasks: add-master.yml
-#
-#- name: check status
- # import_tasks: check.yml

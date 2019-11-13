@@ -4,7 +4,7 @@
     msg: "The next task may take some time to execute: download rbd-db image"
 
 - name: Downloads mysql image
-  shell: docker pull 16601306786/rbd-db:v5.7.26  && mkdir -p /opt/rainbond/etc/mysql
+  shell: docker pull {{ DB_IMAGE }} && mkdir -p /opt/rainbond/etc/mysql
  
 - name: DB | Copy DB conf
   template:
@@ -32,7 +32,7 @@
   shell: rm -rf  /opt/rainbond/data/mysql.bak && mv /opt/rainbond/data/mysql  /opt/rainbond/data/mysql.bak
   when: mysql_data_check.stat.isreg is defined
 
-- name: Remove container
+- name: Remove db container
   docker_container:
     name: rbd-db
     state: absent

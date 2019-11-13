@@ -1,12 +1,12 @@
 ---
-- name: INSTALL Mysql
+- name: Install Mysql
   import_tasks: install_mysql.yml
 
-- name: ADD slave
+- name: Add Slave
   import_tasks: add-slave.yml
 
-- name: ADD slave to master
+- name: Add Slave to Master
   import_tasks: add-master.yml
 
-- name: check status
+- name: Check status
   import_tasks: check.yml

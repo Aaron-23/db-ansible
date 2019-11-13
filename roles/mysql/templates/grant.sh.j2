@@ -5,12 +5,9 @@
 # Description: auto config MySQL master&slave
 #====================================================
 
-SYNC_USER="slave"
-SYNC_USER_PASS="Gr123465!"
-
 cat >/data/master.sql <<- EOF
 
-grant replication slave on *.* to '$SYNC_USER'@'%' identified by '$SYNC_USER_PASS';
+grant replication slave on *.* to '{{ SYNC_USER }}'@'{{ IPS }}' identified by '{{ SYNC_USER_PASS }}';
 FLUSH PRIVILEGES;
 EOF
 

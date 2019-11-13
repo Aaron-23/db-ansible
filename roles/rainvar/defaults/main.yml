@@ -1,0 +1,12 @@
+# Mysql
+DB_IMAGE: "16601306786/rbd-db:v5.7.26"
+MASTER_HOST: "192.168.31.135"
+SLAVE_HOST: "192.168.31.136"
+SYNC_USER: "slave"
+SYNC_USER_PASS: "Gr123465!"
+IPS: "%"
+
+# Keepalived
+
+NIC_NAME: "ens33"
+VIP: "192.168.31.100"

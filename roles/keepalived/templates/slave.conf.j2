@@ -9,7 +9,7 @@ vrrp_script check_mysql {
       }
 vrrp_instance VI_1 {
        state BACKUP
-       interface eth0
+       interface {{ NIC_NAME }}
        virtual_router_id 60
        priority 70
        nopreempt
@@ -19,7 +19,7 @@ vrrp_instance VI_1 {
            auth_pass 6666
        }
 virtual_ipaddress {
-           192.168.2.123
+           {{ VIP }}
        }
 track_script {
        check_mysql

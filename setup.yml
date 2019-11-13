@@ -1,6 +1,7 @@
 ---
 - hosts: all
   roles:
+    - { role: rainvar, tags: default }
     - { role: docker, tags: tasks }
     - { role: mysql, tags: tasks }
     - { role: keepalived, tags: tasks }
