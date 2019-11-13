@@ -1,0 +1,5 @@
+#!/bin/bash
+ss -antp|grep :3306 &>/dev/null
+if [ $? -ne 0 ] ;then
+cat /var/run/keepalived.pid | xargs kill
+fi

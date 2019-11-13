@@ -38,10 +38,10 @@
     state: absent
 
 - name: Start rbd-db
-  service:
+  systemd:
     name: rbd-db
-    enabled: yes
     state: started
+    daemon_reload: yes
 
 - name: Wait rbd-db started
   shell: sleep 20

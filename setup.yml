@@ -3,3 +3,4 @@
   roles:
     - { role: docker, tags: tasks }
     - { role: mysql, tags: tasks }
+    - { role: keepalived, tags: tasks }
