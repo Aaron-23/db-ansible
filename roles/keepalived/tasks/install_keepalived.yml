@@ -30,7 +30,7 @@
 - name: Keepalived |Copy check script
   template:
     src: check_mysql.sh.j2
-    dest: "/etc/keepalived/check-mysql.sh"
+    dest: "/etc/keepalived/check_mysql.sh"
     mode: 755
 
 - name: Keepalived |Copy Keepalived service
