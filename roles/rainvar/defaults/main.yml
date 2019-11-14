@@ -1,5 +1,5 @@
 # Mysql
-DB_IMAGE: "16601306786/rbd-db:v5.7.26"
+DB_IMAGE: "rainbond/rbd-db:v5.1.9"
 MASTER_HOST: "192.168.31.135"
 SLAVE_HOST: "192.168.31.136"
 SYNC_USER: "slave"
