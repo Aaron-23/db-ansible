@@ -44,5 +44,5 @@
     daemon_reload: yes
 
 - name: Wait rbd-db started
-  shell: sleep 20
+  shell: sleep 30
 
