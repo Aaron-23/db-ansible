@@ -37,12 +37,12 @@
     name: rbd-db
     state: absent
 
-- name: Start rbd-db
+- name: Wait rbd-db started
   systemd:
     name: rbd-db
     state: started
     daemon_reload: yes
 
-- name: Wait rbd-db started
+- name: Start rbd-db
   shell: sleep 30
 
