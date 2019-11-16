@@ -1,4 +1,7 @@
 ---
-- name: Install Keepalived
-  import_tasks: install_keepalived.yml
+- name: Prepare Keepalived
+  import_tasks: prepare_vip.yml
+
+- name: Check VIP
+  import_tasks: check_vip.yml
 

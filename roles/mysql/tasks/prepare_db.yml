@@ -6,19 +6,19 @@
 - name: Downloads mysql image
   shell: docker pull {{ DB_IMAGE }} && mkdir -p /opt/rainbond/etc/mysql
  
-- name: DB | Copy DB conf
+- name: Copy DB conf
   template:
     src: master.cnf.j2
     dest: "/opt/rainbond/etc/mysql/mysqld.cnf"
   when: inventory_hostname in groups['new-master']
 
-- name: DB | Copy DB conf
+- name: Copy DB conf
   template:
     src: slave.cnf.j2
     dest: "/opt/rainbond/etc/mysql/mysqld.cnf"
   when: inventory_hostname in groups['new-slave']
 
-- name: DB | Copy DB service
+- name: Copy DB service
   template:
     src: rbd-db.service.j2
     dest: "/etc/systemd/system/rbd-db.service"

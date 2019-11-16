@@ -3,42 +3,43 @@
   debug:
     msg: "The next task may take some time to execute: Install Keepalived"
 
-- name: Keepalived |Install Keepalived
+- name: Install Keepalived
   yum: 
     name: 
       - keepalived
+      - iproute
     state: present
 
-- name: Keepalived |Start the keepalived service
+- name: Start the keepalived service
   systemd:
     name: keepalived
     state: started
     enabled: True
 
-- name: Keepalived |Copy keepalived conf
+- name: Copy keepalived conf
   template:
     src: master.conf.j2
     dest: "/etc/keepalived/keepalived.conf"
   when: inventory_hostname in groups['new-master']
 
-- name: Keepalived | Copy DB conf
+- name: Copy DB conf
   template:
     src: slave.conf.j2
     dest: "/etc/keepalived/keepalived.conf"
   when: inventory_hostname in groups['new-slave']
 
-- name: Keepalived |Copy check script
+- name: Copy check script
   template:
     src: check_mysql.sh.j2
     dest: "/etc/keepalived/check_mysql.sh"
     mode: 755
 
-- name: Keepalived |Copy Keepalived service
+- name: Copy Keepalived service
   template:
     src: keepalived.service.j2
     dest: "/usr/lib/systemd/system/keepalived.service"
 
-- name: Keepalived |daemon-reload to pick up config changes and restart service
+- name: daemon-reload to pick up config changes and restart service
   systemd:
     state: restarted
     daemon_reload: yes

@@ -1,6 +1,6 @@
 ---
-- name: Install Mysql
-  import_tasks: install_mysql.yml
+- name: Prepare db
+  import_tasks: prepare_db.yml
 
 - name: Add Slave
   import_tasks: add-slave.yml

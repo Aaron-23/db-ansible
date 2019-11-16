@@ -6,11 +6,11 @@
     mode: 755
   when: inventory_hostname in groups['new-master']
 
-- name: Main authorization
+- name: Create replication user
   shell: docker exec -t rbd-db sh -c 'sh /data/grant.sh'
   when: inventory_hostname in groups['new-master']
 
-- name:  Add slave
+- name: Add slave
   template:
     src: add_slave.sh.j2
     dest: "/opt/rainbond/data/mysql/add-slave.sh"

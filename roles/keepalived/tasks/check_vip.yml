@@ -1,0 +1,12 @@
+--- 
+- name: Check if VIP already exists
+  shell: sleep 5 && ip a |grep {{ VIP }}
+  register: ip
+  until: ip is succeeded
+  retries: 3
+  delay: 5
+  when: inventory_hostname in groups['new-master']
+
+- name: All is done
+  debug:
+    msg: "Congratulations on the successful installation"

@@ -1,0 +1,21 @@
+---
+- name: prepare |Disable selinux
+  shell: "setenforce 0"
+  failed_when: false
+
+- name: prepare |Disable selinux forever
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: "^SELINUX="
+    line: "SELINUX=disabled"
+
+- name: prepare |Remove centos firewall pkg
+  yum:
+    name:
+      - firewalld
+      - python-firewall
+      - firewalld-filesystem
+      - dnsmasq
+      - nscd
+    state: absent
+

@@ -1,0 +1,36 @@
+---
+- name: Install docker-py
+  shell: yum install -y -q epel-release && yum -y install python2-pip-8.1.2-10.el7.noarch ss && pip install docker-py
+
+- name: Check if daemon is existing
+  stat: path=/etc/docker/daemon.json
+  register: docker_daemon_check
+
+- name: Start docker.service
+  service:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Write docker daemon For CentOS
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  when: ansible_distribution == "CentOS" and docker_daemon_check.stat.isreg is not defined
+
+- name: Write docker daemon For Debian/Ubuntu
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian" and docker_daemon_check.stat.isreg is not defined
+
+- name: Reload docker
+  shell: systemctl daemon-reload && systemctl restart docker
+
+- name: Ensure docker service is started and enabled
+  service:
+    name: docker
+    enabled: yes
+    state: started
+  ignore_errors: true
+
