@@ -37,12 +37,15 @@
     name: rbd-db
     state: absent
 
-- name: Wait rbd-db started
+- name: Start rbd-db 
   systemd:
     name: rbd-db
     state: started
     daemon_reload: yes
 
-- name: Start rbd-db
-  shell: sleep 40
-
+- name: Check Rbd-db starts successfully
+  shell: ss -lntp|grep :3306
+  register: port
+  until: port is succeeded
+  retries: 5
+  delay: 5
