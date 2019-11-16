@@ -1,4 +1,10 @@
 ---
+- name: Docker | Install docker online
+  shell: "export VERSION=18.06 && curl -fsSL http://rainbond-pkg.oss-cn-shanghai.aliyuncs.com/releases/docker/install-docker.sh | bash -s docker "
+  register: docker_task_result
+  until: docker_task_result is succeeded
+  retries: 3
+  
 - name: Install docker-py
   shell: yum install -y -q epel-release && yum -y install python2-pip-8.1.2-10.el7.noarch ss && pip install docker-py
 
