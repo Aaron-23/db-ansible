@@ -44,7 +44,7 @@
     daemon_reload: yes
 
 - name: Check Rbd-db starts successfully
-  shell: sleep 5 && ss -lntp|grep :3306
+  shell: sleep 10 && ss -lntp|grep :3306
   register: port
   until: port is succeeded
   retries: 5
