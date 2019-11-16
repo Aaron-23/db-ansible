@@ -48,4 +48,4 @@
   register: port
   until: port is succeeded
   retries: 5
-  delay: 5
+  delay: 15
