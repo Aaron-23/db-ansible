@@ -1,5 +1,5 @@
 [new-master]
 master ansible_user='root'  ansible_pass='gr123465!'  ansible_host='192.168.31.157' ansible_python_interpreter=/usr/bin/python2.7 ansible_port='22'
 [new-slave]
- slave ansible_user='root'  ansible_pass='gr123465!'  ansible_host='192.168.31.199' ansible_python_interpreter=/usr/bin/python2.7ansible_port='22'
+slave ansible_user='root'  ansible_pass='gr123465!'  ansible_host='192.168.31.199' ansible_python_interpreter=/usr/bin/python2.7ansible_port='22'
 
