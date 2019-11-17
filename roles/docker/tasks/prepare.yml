@@ -5,11 +5,6 @@
       - ansible_version.full|version_compare('2.3.0', '>=')
   when: inventory_hostname in groups['new-master']
 
-- name: Stop if unknown OS
-  assert:
-    that: ansible_distribution in [ 'CentOS','Ubuntu']
-  ignore_errors: false
-
 - name: prepare |Disable selinux
   shell: "setenforce 0"
   failed_when: false
