@@ -9,7 +9,7 @@
       - keepalived
       - iproute
     state: present
-when: ansible_distribution == "CentOS"
+  when: ansible_distribution == "CentOS"
 
 - name: Install  Keepalived
   apt: 
