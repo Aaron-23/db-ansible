@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  gather_facts: false
   roles:
     - { role: rainvar, tags: default }
     - { role: docker, tags: tasks }
