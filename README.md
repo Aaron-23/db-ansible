@@ -7,6 +7,9 @@ git clone https://github.com/Aaron-23/db-ansible.git
 
 cd db-ansible/
 
+# Execute initialization script
+sh ready.sh
+
 # Fill in database host IP
 vi hosts
 
