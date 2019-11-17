@@ -5,7 +5,7 @@ After=docker.service
 [Service]
 ExecStartPre=-/bin/bash -c 'docker rm rbd-db'
 ExecStart=/bin/bash -c 'docker run -d --name rbd-db --network host -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -v /opt/rainbond/data/mysql:/data -v /opt/rainbond/etc/mysql/mysqld.cnf:/etc/percona-server.conf.d/mysqld.cnf  -i {{ DB_IMAGE }}'
-#ExecStop=/bin/bash -c 'docker stop rbd-db'
+ExecStop=/bin/bash -c 'docker stop rbd-db'
 #Restart=always
 #RestartSec=10
 
