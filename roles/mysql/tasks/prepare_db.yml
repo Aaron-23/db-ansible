@@ -3,7 +3,7 @@
   debug:
     msg: "The next task may take some time to execute: download rbd-db image"
 
-- name: Downloads mysql image
+- name: Downloads DB image
   shell: docker pull {{ DB_IMAGE }} && mkdir -p /opt/rainbond/etc/mysql
  
 - name: Copy DB conf

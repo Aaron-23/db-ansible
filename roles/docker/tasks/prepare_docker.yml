@@ -1,12 +1,7 @@
 ---
-- name: Check if docker is installed
-  stat: path="/usr/bin/docker"
-  register: docker_check
-
 - name: The next task may take some time to execute
   debug:
     msg: "The next task may take some time to execute: install docker"
-  when: docker_check.stat.isreg is undefined
 
 - name: Docker | Install docker online
   shell: "export VERSION=18.06 && curl -fsSL http://rainbond-pkg.oss-cn-shanghai.aliyuncs.com/releases/docker/install-docker.sh | bash -s docker "
@@ -19,7 +14,7 @@
   when: ansible_distribution == "CentOS"
 
 - name: Install docker-py
-  shell: apt-get  -y install python-pip  && pip install docker-py
+  shell:  pip install docker-py
   when: ansible_distribution == "Ubuntu"
 
 - name: Check if daemon is existing

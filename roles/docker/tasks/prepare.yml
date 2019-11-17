@@ -35,13 +35,16 @@
   when: ansible_distribution == "CentOS"
 
 
-- name: install ubuntu package
+- name: prepare |Install ubuntu package
   apt: 
     name:
       - curl
-      - bash-completion     
-      - ipvsadm
+      - net-tools
+      - sshpass 
+      - python-pip  
       - net-tools
     update_cache: yes
     autoclean: yes
     state: latest
+  when: ansible_distribution == "Ubuntu"
+
