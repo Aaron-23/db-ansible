@@ -3,7 +3,6 @@
   assert:
     that:
       - ansible_version.full|version_compare('2.3.0', '>=')
-  run_once: yes
   when: inventory_hostname in groups['new-master']
 
 - name: Stop if unknown OS
@@ -29,8 +28,6 @@
       - firewalld
       - python-firewall
       - firewalld-filesystem
-      - dnsmasq
-      - nscd
     state: absent
   when: ansible_distribution == "CentOS"
 
@@ -45,6 +42,6 @@
       - net-tools
     update_cache: yes
     autoclean: yes
-    state: latest
+    state: present
   when: ansible_distribution == "Ubuntu"
 

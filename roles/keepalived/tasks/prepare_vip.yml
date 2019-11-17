@@ -9,6 +9,16 @@
       - keepalived
       - iproute
     state: present
+when: ansible_distribution == "CentOS"
+
+- name: Install  Keepalived
+  apt: 
+    name:
+      - keepalived
+    update_cache: yes
+    autoclean: yes
+    state: present
+  when: ansible_distribution == "Ubuntu"
 
 - name: Start the keepalived service
   systemd:
