@@ -1,8 +1,13 @@
 ---
+- name: Check if docker is installed
+  stat: path="/usr/bin/docker"
+  register: docker_check
+
 - name: The next task may take some time to execute
   debug:
     msg: "The next task may take some time to execute: install docker"
-    
+  when: docker_check.stat.isreg is undefined
+
 - name: Docker | Install docker online
   shell: "export VERSION=18.06 && curl -fsSL http://rainbond-pkg.oss-cn-shanghai.aliyuncs.com/releases/docker/install-docker.sh | bash -s docker "
   register: docker_task_result
@@ -11,6 +16,11 @@
   
 - name: Install docker-py
   shell: yum install -y -q epel-release && yum -y install python2-pip-8.1.2-10.el7.noarch ss && pip install docker-py
+  when: ansible_distribution == "CentOS"
+
+- name: Install docker-py
+  shell: apt-get  -y install python-pip  && pip install docker-py
+  when: ansible_distribution == "Ubuntu"
 
 - name: Check if daemon is existing
   stat: path=/etc/docker/daemon.json
@@ -28,11 +38,11 @@
     dest: /etc/docker/daemon.json
   when: ansible_distribution == "CentOS" and docker_daemon_check.stat.isreg is not defined
 
-- name: Write docker daemon For Debian/Ubuntu
+- name: Write docker daemon For Ubuntu
   template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
-  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian" and docker_daemon_check.stat.isreg is not defined
+  when: ansible_distribution == "Ubuntu" and docker_daemon_check.stat.isreg is not defined
 
 - name: Reload docker
   shell: systemctl daemon-reload && systemctl restart docker
