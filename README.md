@@ -2,6 +2,8 @@
 
 ### Ansible install Rbd-DB dual primary cluster + keepalived; For centos 7.4 Ubuntu 16.04
 
+> Copy public key before executing Playbook
+
 ```
 git clone https://github.com/Aaron-23/db-ansible.git
 
