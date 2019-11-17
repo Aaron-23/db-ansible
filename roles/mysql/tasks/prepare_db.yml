@@ -32,10 +32,10 @@
   shell: rm -rf  /opt/rainbond/data/mysql.bak && mv /opt/rainbond/data/mysql  /opt/rainbond/data/mysql.bak
   when: mysql_data_check.stat.isreg is defined
 
-- name: Remove db container
-  docker_container:
-    name: rbd-db
-    state: absent
+#- name: Remove db container
+#  docker_container:
+#    name: rbd-db
+#    state: absent
 
 - name: Start rbd-db 
   systemd:
